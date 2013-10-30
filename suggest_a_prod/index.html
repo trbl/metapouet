@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="jquery-2.0.3.min.js"></script>
+  </head>
+
+  <body>
+    <div id="container">
+        <h1 class=" font-effect-anaglyph">Suggest-A-Prod</h1>
+        <div id="dataEntry">
+            <label class="pouetID">your pouetID<input id="pouetID" type="text"/></label><br>
+            Find prods that
+            <select id="buddyType">
+                <option value="up">thumb up buddies</option>
+                <option value="down">thumb down buddies</option>
+            </select>
+            think are
+            <select id="likeType">
+                <option value="1">awesome</option>
+                <option value="0">meh</option>
+                <option value="-1">shit</option>
+            </select>
+            and, sort on
+            <select id="sortType">
+                <option value="rateWeight">their rate weight</option>
+                <option value="amount">their amount</option>
+            </select>.
+            <br>
+            <br>
+            <input type="button" id="getSuggestion" class="button" value="goes los!"/>
+        </div>
+    </div>
+    <div id="meta">
+        <div id="progress"><div id="bar"></div></div>
+        <div id="log"></div>
+    </div>
+    <div id="results"></div>
+    <div class="navigation"><a id="next" href="20"></a></div>
+
+    <script src="infinite-ajax-scroll.js"></script>
+    <script src="pouetAPI.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
