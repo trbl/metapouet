@@ -10,9 +10,10 @@
 
   <body>
     <div id="container">
-        <h1 class=" font-effect-anaglyph">Suggest-A-Prod</h1>
+        <h1 class="font-effect-anaglyph">Suggest-A-Prod</h1>
         <div id="dataEntry">
             <label class="pouetID">your pouetID<input id="pouetID" type="text"/></label><br>
+            <span class="questions">
             Find prods that
             <select id="buddyType">
                 <option value="up">thumb up buddies</option>
@@ -31,6 +32,50 @@
                 <option value="rateWeightMulti">their rate weight (down*up)</option>
             </select>.
             <br>
+            
+            <span id="extra">
+                Then make sure to only show me prods with the type of 
+                <!--<input type="checkbox" id="reverseType">reverse results<br>-->
+
+                <select name="type" multiple="" id="prodType" size="10">
+                    <option>32b</option>
+                    <option>64b</option>
+                    <option>128b</option>
+                    <option>256b</option>
+                    <option>512b</option>
+                    <option>1k</option>
+                    <option>4k</option>
+                    <option>8k</option>
+                    <option>16k</option>
+                    <option>32k</option>
+                    <option>40k</option>
+                    <option>64k</option>
+                    <option>80k</option>
+                    <option>96k</option>
+                    <option>100k</option>
+                    <option>128k</option>
+                    <option>256k</option>
+                    <option>artpack</option>
+                    <option>bbstro</option>
+                    <option>cracktro</option>
+                    <option>demo</option>
+                    <option>demopack</option>
+                    <option>demotool</option>
+                    <option>dentro</option>
+                    <option>diskmag</option>
+                    <option>fastdemo</option>
+                    <option>game</option>
+                    <option>intro</option>
+                    <option>invitation</option>
+                    <option>liveact</option>
+                    <option>musicdisk</option>
+                    <option>procedural graphics</option>
+                    <option>report</option>
+                    <option>slideshow</option>
+                    <option>votedisk</option>
+                    <option>wild</option>
+                </select>, thanks!</span>
+            </span>
             <br>
             <input type="button" id="getSuggestion" class="button" value="goes los!"/>
         </div>

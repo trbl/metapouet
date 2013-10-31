@@ -41,7 +41,8 @@ var SuggestAProd = function () {
 
     var _suggestionList = [],
         _currentPouetan,
-        _buddies = [];
+        _buddies = [],
+        _prodInfo = [];
 
     var _friendType = $('#buddyType').val(),
         _sortType = $('#sortType').val(),
@@ -127,7 +128,6 @@ var SuggestAProd = function () {
         });
     }
 
-    var _prodInfo = [];
     function buildList() {
 
         progress("Sorting things out..", 95);
@@ -149,7 +149,7 @@ var SuggestAProd = function () {
                 if(!_prodInfo[prod.pouetID])
                     _prodInfo[prod.pouetID] = prod;
 
-                if ((prod.vote == _likeType))// && (_prodType.indexOf(prod.type[0]) > -1))
+                if ((prod.vote == _likeType) && (_prodType.indexOf(prod.type[0]) > -1))
                     return true;
 
                 //reduce to IDs
