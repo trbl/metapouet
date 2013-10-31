@@ -2,7 +2,6 @@ var PouetAPI = function () {
 
     var PROXY_PREPEND = "http://metapouet.net/proxy/?url=http%3A%2F%2F",
         POUET_USERPAGE = PROXY_PREPEND + "www.pouet.net/user.php?who=",
-        //POUET_DEMOBLOG = PROXY_PREPEND + encodeURIComponent("www.pouet.net/user.php?show=demoblog&com=-1&nothumbsup=&nopiggies=1&nothumbsdown=1&who="),
         POUET_XNFO = PROXY_PREPEND + "www.pouet.net/export/prod.xnfo.php?which=";
 
     var _userInfoList = [],
@@ -37,7 +36,7 @@ var PouetAPI = function () {
             prodsInCommon = parseInt($(node).text().split(' (')[1].split('prods)')[0], 10),
             avatar = dude.find('img.avatar').attr('data-src');
 
-        return {"name": name, "pouetID": pouetID, "avatar": avatar, "prodsInCommon": prodsInCommon};
+        return {"name": name, "pouetID": pouetID, "avatar": avatar, "prodsInCommon": prodsInCommon, "similarity":prodsInCommon};
     }
 
     function parseUserPage(html) {
@@ -56,6 +55,19 @@ var PouetAPI = function () {
 
         buddies['up'] = $.makeArray(thumbUpBuddyRows.find('li').map(getUserPageBuddies));
         buddies['down'] = $.makeArray(thumbDownBuddyRows.find('li').map(getUserPageBuddies));
+
+        //if the buddy is in both up and down lists, give them a boost
+        for(var i = 0; i < buddies['up'].length; i++){
+            for(var c = 0; c < buddies['down'].length; c++){
+                //if we love/hate the same things we might have better suggestions
+                if(buddies['up'][i].pouetID === buddies['down'][c].pouetID){
+                    var ratio = buddies['up'][i].prodsInCommon * buddies['down'][c].prodsInCommon;
+
+                    buddies['up'][i]['similarity'] = ratio;
+                    buddies['down'][c]['similarity'] = ratio;
+                }
+            }
+        }
 
         return {
             "thumb": buddies,
@@ -92,7 +104,6 @@ var PouetAPI = function () {
 
             //currently pouet can throw a error midway of the demoblog, so let's stop collecting if that happens
             if(prodRow.find('a[href^="prod.php?which="]').attr('href')) {
-
 
                 var prodID = prodRow.find('a[href^="prod.php?which="]').attr('href').split('=')[1],
                     prodName = prodRow.find('a[href^="prod.php?which="]').text(),

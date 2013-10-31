@@ -166,11 +166,13 @@ var SuggestAProd = function () {
                     if (idx > -1) {
                         _suggestionList[idx].buddy.push(buddy);
                         _suggestionList[idx].prodsInCommon += Number(buddy.userInfo.prodsInCommon);
+                        _suggestionList[idx].similarity += Number(buddy.userInfo.similarity);
 
                     } else {
                         _suggestionList.push({
                             "buddy": [buddy],
                             "prodsInCommon": Number(buddy.userInfo.prodsInCommon),
+                            "similarity": Number(buddy.userInfo.similarity),
                             "prodID": prodID,
                             "prodInfo":_prodInfo[prodID]});
                     }
@@ -184,11 +186,19 @@ var SuggestAProd = function () {
     }
 
     function sortList() {
+        switch(_sortType) {
+            case "rateWeight":
+                _suggestionList.sort(sortByWeight);
+                break;
 
-        if (_sortType == "rateWeight")
-            _suggestionList.sort(sortByWeight);
-        else
-            _suggestionList.sort(sortBySeen);
+            case "amount":
+                _suggestionList.sort(sortBySeen);
+                break;
+
+            case "rateWeightMulti":
+                _suggestionList.sort(sortByWeightMulti);
+                break;
+        }
     }
 
     function render(startAtIndex) {
@@ -240,7 +250,7 @@ var SuggestAProd = function () {
 
         for (var i = 0; i < list.length; i++) {
             var base = list[i].userInfo;
-            output += '<img src="' + base.avatar + '" title="' + base.name + ' prods in common:' + base.prodsInCommon + '">';
+            output += '<img src="' + base.avatar + '" title="' + base.name + ' prods in common:' + base.prodsInCommon + ' similarity:' + base.similarity + '">';
         }
 
         return output;
@@ -275,6 +285,15 @@ function sortBySeen(a, b) {
     if (a.buddy.length < b.buddy.length)
         return 1;
     if (a.buddy.length > b.buddy.length)
+        return -1;
+    return 0;
+}
+
+function sortByWeightMulti(a, b) {
+
+    if (a.similarity < b.similarity)
+        return 1;
+    if (a.similarity > b.similarity)
         return -1;
     return 0;
 }
